@@ -37,7 +37,7 @@ public class MyDemoLoggingAspect {
 	private void setter()
 	{
 	}
-	@Pointcut("doSomeWork() && (getter() ||setter())")
+	@Pointcut("doSomeWork() && !(getter() ||setter())")
 	private void doSomeWorkForPackage()
 	{
 	}
