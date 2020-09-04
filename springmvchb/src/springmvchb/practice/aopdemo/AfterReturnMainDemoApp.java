@@ -1,12 +1,14 @@
 package springmvchb.practice.aopdemo;
 
+import java.util.List;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import springmvchb.practice.aopdemo.dao.AccountDAO;
 import springmvchb.practice.aopdemo.dao.PlayerDAO;
 import springmvchb.practice.entity.Account;
 
-public class MainDemoApp {
+public class AfterReturnMainDemoApp {
 
 	public static void main(String[] args) {
 		// read spring config java class
@@ -15,20 +17,20 @@ public class MainDemoApp {
 		
 		// get the bean from spring container
 		AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
-		PlayerDAO playerDAO=context.getBean("playerDAO",PlayerDAO.class);
-				
-		// call the business method
-		Account myAccount = new Account();
-		myAccount.setLevel("101");
-		myAccount.setName("Danish");
-		theAccountDAO.addAccount(myAccount, true);
-		theAccountDAO.doWork();
-		theAccountDAO.setAname("Devanshu");
-		theAccountDAO.setAid("139181");
-		System.out.println(theAccountDAO.getAid());
-		System.out.println(theAccountDAO.getAname());
-		playerDAO.getPlayerName();
+		List<Account> getAccountList=null;
+		try
+		{
+		 getAccountList=theAccountDAO.findAllAccount();
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Exception: "+ex);
+		}
 		
+		System.out.println("//---------");
+		System.out.println("List: "+getAccountList);
+		theAccountDAO.printAllAccount(getAccountList);
+		System.out.println("//---------");
 		// close the context
 		context.close();
 
